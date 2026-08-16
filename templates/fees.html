@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 900px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 12px;">
+    <h1>Fees</h1>
+    <form method="POST" action="{{ url_for('generate_month') }}"
+          onsubmit="return confirm('Generate next month\'s fee charge for every active student?');">
+      <button type="submit" class="btn-primary btn-small">Move to next Month</button>
+    </form>
+  </div>
+
+  <form method="GET" style="margin-bottom: 20px;">
+    <select name="class_id" onchange="this.form.submit()">
+      <option value="">All classes</option>
+      {% for c in classes %}
+      <option value="{{ c.id }}" {% if selected_class == c.id %}selected{% endif %}>{{ c.class_name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Name</th><th>Reg. no.</th><th>Class</th><th>Dues</th><th>Record payment</th></tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.student.name }}</td>
+        <td>{{ row.student.reg_number }}</td>
+        <td>{{ row.student.school_class.class_name }}</td>
+        <td class="{{ 'status-unpaid' if row.dues > 0 else 'status-paid' }}">{{ row.dues }}</td>
+        <td>
+          <form method="POST" action="{{ url_for('pay_fee', student_id=row.student.id) }}" style="display:flex; gap:6px;">
+            <input type="hidden" name="class_id" value="{{ selected_class or '' }}">
+            <input type="number" step="0.01" name="amount" placeholder="Amount" required style="width:90px;">
+            <button type="submit" class="btn-primary btn-small">Pay</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">No students found.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

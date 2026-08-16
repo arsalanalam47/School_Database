@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 700px;">
+  <h1>Fee settings</h1>
+
+  <form method="POST" class="inline-form">
+    <input type="hidden" name="action" value="update_fees">
+    <div style="flex:1; min-width:150px;">
+      <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Admission fee</label>
+      <input type="number" step="0.01" name="admission_fee" value="{{ school.admission_fee }}" required>
+    </div>
+    <div style="flex:1; min-width:150px;">
+      <label style="display:block; font-size:0.75rem; text-transform:uppercase; color:var(--muted); margin-bottom:6px;">Security fee</label>
+      <input type="number" step="0.01" name="security_fee" value="{{ school.security_fee }}" required>
+    </div>
+    <button type="submit" class="btn-primary btn-small" style="align-self:flex-end;">Save</button>
+  </form>
+
+  <div style="display:flex; gap:12px; margin: 20px 0 32px; flex-wrap: wrap;">
+    <form method="POST" onsubmit="return confirm('Add the admission fee to every active student\'s dues?');">
+      <input type="hidden" name="action" value="apply_admission">
+      <button type="submit" class="btn-primary btn-small">Apply admission fee to all students</button>
+    </form>
+    <form method="POST" onsubmit="return confirm('Add the security fee to every active student\'s dues?');">
+      <input type="hidden" name="action" value="apply_security">
+      <button type="submit" class="btn-primary btn-small">Apply security fee to all students</button>
+    </form>
+  </div>
+
+  <h2 style="font-size:1rem; color:var(--muted); text-transform:uppercase;">Add a misc. fee (e.g. examination fee)</h2>
+  <form method="POST" class="inline-form">
+    <input type="hidden" name="action" value="add_misc">
+    <input type="text" name="misc_label" placeholder="Fee name (e.g. Examination fee)" required>
+    <input type="number" step="0.01" name="misc_amount" placeholder="Amount" required>
+    <select name="misc_class_id">
+      <option value="">All classes</option>
+      {% for c in classes %}
+      <option value="{{ c.id }}">{{ c.class_name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="btn-primary btn-small">Apply</button>
+  </form>
+</div>
+{% endblock %}

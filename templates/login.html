@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-card">
+  <div class="logo-badge">{{ school_name[0] if school_name else 'S' }}</div>
+  <h1>{{ school_name }}</h1>
+  <p class="subtitle">School Management System</p>
+  <form method="POST">
+    <label>Username</label>
+    <input type="text" name="username" required autofocus>
+
+    <label>Password</label>
+    <input type="password" name="password" required>
+
+    <button type="submit" class="btn-primary">Sign in</button>
+  </form>
+</div>
+{% endblock %}

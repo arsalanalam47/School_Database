@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 700px;">
+  <h1>Welcome, {{ student.name }}</h1>
+  <p class="subtitle">Class: {{ student.school_class.class_name }} | Reg. no: {{ student.reg_number }}</p>
+
+  <div style="background: rgba(255,255,255,0.03); border-radius:10px; padding:16px; margin-bottom:24px;">
+    <span style="color: var(--muted); font-size:0.8rem; text-transform:uppercase;">Amount due now</span>
+    <div style="font-size:1.6rem; font-weight:700; color: {{ 'var(--danger)' if total_due > 0 else 'var(--success)' }};">
+      {{ total_due }}
+    </div>
+  </div>
+
+  <h2 style="font-size:1rem; color: var(--muted); text-transform:uppercase; margin-top:32px;">Payment history</h2>
+  <table class="data-table">
+    <thead><tr><th>Date</th><th>Amount</th></tr></thead>
+    <tbody>
+      {% for p in payments %}
+      <tr><td>{{ p.payment_date }}</td><td>{{ p.amount }}</td></tr>
+      {% else %}
+      <tr><td colspan="2">No payments recorded yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

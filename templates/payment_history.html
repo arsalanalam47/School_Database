@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 900px;">
+  <h1>Payment history</h1>
+  <table class="data-table">
+    <thead>
+      <tr><th>Date</th><th>Student</th><th>Reg. no.</th><th>Amount</th><th>Balance after</th><th>Recorded by</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for p in payments %}
+      <tr>
+        <td>{{ p.payment_date }}</td>
+        <td>{{ p.student.name }}</td>
+        <td>{{ p.student.reg_number }}</td>
+        <td>{{ p.amount }}</td>
+        <td>{{ p.balance_after }}</td>
+        <td>{{ p.recorded_by }}</td>
+        <td><a href="{{ url_for('payment_slip', payment_id=p.id) }}" style="color:var(--accent);">Slip</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7">No payments recorded yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

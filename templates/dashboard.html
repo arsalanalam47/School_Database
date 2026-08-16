@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 700px; text-align: left;">
+  <h1>Welcome, {{ current_user.username }}</h1>
+  <p class="subtitle">Role: {{ current_user.role }}</p>
+
+  <h2 style="font-size:1rem; color:var(--muted); text-transform:uppercase; margin-top:24px;">Find &amp; edit a student</h2>
+  <form method="GET" class="inline-form">
+    <input type="text" name="q" placeholder="Search by name, reg. no., CNIC, father's name, or phone" value="{{ query or '' }}">
+    <button type="submit" class="btn-primary btn-small">Search</button>
+  </form>
+
+  {% if query %}
+    <table class="data-table" style="margin-top:16px;">
+      <thead><tr><th>Name</th><th>Reg. no.</th><th>Class</th><th></th></tr></thead>
+      <tbody>
+        {% for s in results %}
+        <tr>
+          <td>{{ s.name }}</td><td>{{ s.reg_number }}</td><td>{{ s.school_class.class_name }}</td>
+          <td><a href="{{ url_for('edit_student', student_id=s.id) }}" style="color:var(--accent);">Edit</a></td>
+        </tr>
+        {% else %}
+        <tr><td colspan="4">No student found for "{{ query }}".</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+{% endblock %}

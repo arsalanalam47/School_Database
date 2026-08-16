@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 650px;">
+  <h1>Find a student</h1>
+  <form method="GET" class="grid-form" style="grid-template-columns: repeat(2, 1fr);">
+    <div><label>Student ID (reg. no.)</label><input type="text" name="reg_number" value="{{ reg_number }}"></div>
+    <div><label>Name</label><input type="text" name="name" value="{{ name }}"></div>
+    <div><label>Father's name</label><input type="text" name="father_name" value="{{ father_name }}"></div>
+    <div><label>CNIC</label><input type="text" name="cnic" value="{{ cnic }}"></div>
+    <div><label>Phone number</label><input type="text" name="phone_number" value="{{ phone_number }}"></div>
+    <div class="form-actions"><button type="submit" class="btn-primary btn-small">Search</button></div>
+  </form>
+
+  {% if prefill %}
+    <div style="background: rgba(255,255,255,0.03); border-radius:10px; padding:16px; margin-top:20px;">
+      <p style="margin:0 0 6px;"><strong>{{ prefill.name }}</strong> — {{ prefill.reg_number }}</p>
+      <p style="margin:0; color: var(--muted); font-size:0.9rem;">
+        Father: {{ prefill.father_name or '—' }} | CNIC: {{ prefill.cnic or '—' }} | Phone: {{ prefill.phone_number or '—' }}
+      </p>
+      <a href="{{ url_for('payment_detail', student_id=prefill.id) }}" class="btn-primary btn-small"
+         style="text-decoration:none; display:inline-block; margin-top:14px;">View full record →</a>
+    </div>
+  {% elif results %}
+    <table class="data-table" style="margin-top:20px;">
+      <thead><tr><th>Name</th><th>Reg. no.</th><th>Class</th><th></th></tr></thead>
+      <tbody>
+        {% for s in results %}
+        <tr>
+          <td>{{ s.name }}</td><td>{{ s.reg_number }}</td><td>{{ s.school_class.class_name }}</td>
+          <td><a href="{{ url_for('payment_detail', student_id=s.id) }}" style="color:var(--accent);">View record</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif reg_number or name or father_name or cnic or phone_number %}
+    <p style="color: var(--muted); margin-top:16px;">No student found matching that search.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Flask / instance data
+instance/
+
+# Database - never commit real student/payment data
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+!database/.gitkeep
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec
+
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

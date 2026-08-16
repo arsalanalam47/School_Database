@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 750px;">
+  <h1>Earnings reports</h1>
+
+  <div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:28px;">
+    <div style="flex:1; min-width:200px; background: rgba(255,255,255,0.03); border-radius:10px; padding:16px;">
+      <span style="color: var(--muted); font-size:0.8rem; text-transform:uppercase;">This month ({{ this_month }})</span>
+      <div style="font-size:1.5rem; font-weight:700; color: var(--success);">{{ this_month_total }}</div>
+    </div>
+    <div style="flex:1; min-width:200px; background: rgba(255,255,255,0.03); border-radius:10px; padding:16px;">
+      <span style="color: var(--muted); font-size:0.8rem; text-transform:uppercase;">This year ({{ this_year }})</span>
+      <div style="font-size:1.5rem; font-weight:700; color: var(--success);">{{ this_year_total }}</div>
+    </div>
+  </div>
+
+  <h2 style="font-size:1rem; color:var(--muted); text-transform:uppercase;">Outstanding dues</h2>
+  <form method="GET" style="margin-bottom:12px;">
+    <select name="class_id" onchange="this.form.submit()">
+      <option value="">All classes</option>
+      {% for c in classes %}
+      <option value="{{ c.id }}" {% if selected_class == c.id %}selected{% endif %}>{{ c.class_name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+  <div style="background: rgba(248,113,113,0.1); border-radius:10px; padding:16px; margin-bottom:32px;">
+    <span style="color: var(--muted); font-size:0.8rem; text-transform:uppercase;">Total unpaid, selected class</span>
+    <div style="font-size:1.5rem; font-weight:700; color: var(--danger);">{{ total_dues }}</div>
+  </div>
+
+  <h2 style="font-size:1rem; color:var(--muted); text-transform:uppercase;">Monthly totals collected</h2>
+  <table class="data-table">
+    <thead><tr><th>Month</th><th>Total collected</th></tr></thead>
+    <tbody>
+      {% for row in monthly %}
+      <tr><td>{{ row.period }}</td><td>{{ row.total }}</td></tr>
+      {% else %}
+      <tr><td colspan="2">No payments yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2 style="font-size:1rem; color:var(--muted); text-transform:uppercase; margin-top:32px;">Yearly totals collected</h2>
+  <table class="data-table">
+    <thead><tr><th>Year</th><th>Total collected</th></tr></thead>
+    <tbody>
+      {% for row in yearly %}
+      <tr><td>{{ row.period }}</td><td>{{ row.total }}</td></tr>
+      {% else %}
+      <tr><td colspan="2">No payments yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

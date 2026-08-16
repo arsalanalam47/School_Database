@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 600px;">
+  <div class="logo-badge" style="margin: 0 auto 16px;">AA</div>
+  <h1 style="text-align:center;">About the Developer</h1>
+  <p class="subtitle" style="text-align:center;">Designed &amp; built this School Management System</p>
+
+  <div style="text-align:left; margin-top: 24px;">
+    <h2 style="font-size:1.15rem; margin-bottom:2px;">Arsalan Alam</h2>
+    <p style="color: var(--muted); font-size:0.9rem; margin-top:0;">Built this system in 2026</p>
+
+    <p style="font-size:0.95rem; line-height:1.6; color: var(--text);">
+      This School Management System was designed and built in 2026 by
+      Arsalan Alam, a Computer Engineering student at COMSATS University
+      Islamabad, Lahore Campus (Class of 2028) at the time of writing. It
+      was built end-to-end with Python, Flask, and SQL to give this school
+      a simple, reliable way to manage students, fees, and records.
+    </p>
+
+    <div style="margin: 20px 0;">
+      <span style="font-size:0.75rem; text-transform:uppercase; color:var(--muted); letter-spacing:0.5px;">Skills at the time of building this</span>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+        {% for skill in ["C++", "Java", "Python", "Flask", "SQL", "HTML/CSS", "JavaScript"] %}
+        <span style="background: rgba(255,255,255,0.06); color: var(--text); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem;">{{ skill }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <span style="font-size:0.75rem; text-transform:uppercase; color:var(--muted); letter-spacing:0.5px;">Links as of 2026 (may no longer be active)</span>
+      <div style="display:flex; flex-direction:column; gap:8px; font-size:0.9rem; margin-top:8px;">
+        <a href="https://arsalanalam.netlify.app" target="_blank" rel="noopener" style="color: var(--accent); text-decoration:none;">Portfolio — arsalanalam.netlify.app</a>
+        <a href="https://github.com/arsalanalam47" target="_blank" rel="noopener" style="color: var(--accent); text-decoration:none;">GitHub — github.com/arsalanalam47</a>
+        <a href="https://linkedin.com/in/arsalanalam47" target="_blank" rel="noopener" style="color: var(--accent); text-decoration:none;">LinkedIn — linkedin.com/in/arsalanalam47</a>
+      </div>
+    </div>
+
+    <p style="font-size:0.8rem; color: var(--muted); margin-top:24px; line-height:1.5;">
+      This project is not actively maintained by its developer after handover.
+      For support or changes going forward, please contact your school's
+      current system administrator.
+    </p>
+  </div>
+</div>
+{% endblock %}

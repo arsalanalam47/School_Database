@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-card">
+  <div class="logo-badge">S</div>
+  <h1>First-time setup</h1>
+  <p class="subtitle">Set your school name and create the admin account</p>
+  <form method="POST">
+    <label>School name</label>
+    <input type="text" name="school_name" required autofocus>
+
+    <label>Admin username</label>
+    <input type="text" name="admin_username" required>
+
+    <label>Admin password</label>
+    <input type="password" name="admin_password" required>
+
+    <button type="submit" class="btn-primary">Create school &amp; admin</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card">
+  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+    <h1>Manage students</h1>
+    <form method="POST" action="{{ url_for('promote_students') }}"
+          onsubmit="return confirm('Move every active student to their next class? Senior-most students will be deactivated. This does not touch fees.');">
+      <button type="submit" class="btn-primary btn-small">Move to next Year</button>
+    </form>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Name</th><th>Reg. no.</th><th>Class</th><th>Status</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for s in students %}
+      <tr>
+        <td>{{ s.name }}</td>
+        <td>{{ s.reg_number }}</td>
+        <td>{{ s.school_class.class_name }}</td>
+        <td class="{{ 'status-paid' if s.status == 'active' else 'status-unpaid' }}">{{ s.status }}</td>
+        <td style="display:flex; gap:8px; flex-wrap: wrap;">
+          <form method="POST" action="{{ url_for('toggle_student_status', student_id=s.id) }}">
+            <button type="submit" class="btn-small"
+                    style="background: rgba(99,102,241,0.15); color:#a5b4fc; border:none; border-radius:6px; padding:6px 14px; cursor:pointer;">
+              {{ 'Deactivate' if s.status == 'active' else 'Activate' }}
+            </button>
+          </form>
+          {% if s.previous_class_id %}
+          <form method="POST" action="{{ url_for('revert_student', student_id=s.id) }}">
+            <button type="submit" class="btn-small"
+                    style="background: rgba(251,191,36,0.15); color:#fbbf24; border:none; border-radius:6px; padding:6px 14px; cursor:pointer;">
+              Revert
+            </button>
+          </form>
+          {% endif %}
+          <form method="POST" action="{{ url_for('delete_student', student_id=s.id) }}"
+                onsubmit="return confirm('Delete this student? This also removes their login and all financial records.');">
+            <button type="submit" class="btn-danger btn-small">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5">No students yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

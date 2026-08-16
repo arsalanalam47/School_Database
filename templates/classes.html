@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card">
+  <h1>Classes</h1>
+  <form method="POST" class="inline-form">
+    <input type="text" name="class_name" placeholder="Class name" required>
+    <input type="number" step="0.01" name="monthly_fee" placeholder="Monthly fee" required>
+    <input type="number" name="class_order" placeholder="Order (1, 2, 3...)" required>
+    <button type="submit" class="btn-primary btn-small">Add class</button>
+  </form>
+
+  <p style="color: var(--muted); font-size: 0.85rem; margin-top: -14px;">
+    "Order" controls promotion — students move from order N to order N+1 when you use "Move to next Year".
+  </p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Order</th><th>Class</th><th>Monthly fee</th></tr>
+    </thead>
+    <tbody>
+      {% for c in classes %}
+      <tr>
+        <td>{{ c.class_order }}</td>
+        <td>{{ c.class_name }}</td>
+        <td>{{ c.monthly_fee }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="3">No classes yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

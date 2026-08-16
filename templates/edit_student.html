@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 600px;">
+  <h1>Edit student</h1>
+  <form method="POST" class="grid-form" style="grid-template-columns: repeat(2, 1fr);">
+    <div><label>Name</label><input type="text" name="name" value="{{ student.name }}" required></div>
+    <div><label>Father's name</label><input type="text" name="father_name" value="{{ student.father_name or '' }}"></div>
+    <div>
+      <label>Gender</label>
+      <select name="gender" required>
+        <option value="Male" {% if student.gender == 'Male' %}selected{% endif %}>Male</option>
+        <option value="Female" {% if student.gender == 'Female' %}selected{% endif %}>Female</option>
+        <option value="Other" {% if student.gender == 'Other' %}selected{% endif %}>Other</option>
+      </select>
+    </div>
+    <div><label>CNIC</label><input type="text" name="cnic" value="{{ student.cnic or '' }}"></div>
+    <div><label>Phone number</label><input type="text" name="phone_number" value="{{ student.phone_number or '' }}"></div>
+    <div><label>Registration number</label><input type="text" name="reg_number" value="{{ student.reg_number }}" required></div>
+    <div>
+      <label>Class</label>
+      <select name="class_id" required>
+        {% for c in classes %}
+        <option value="{{ c.id }}" {% if c.id == student.class_id %}selected{% endif %}>{{ c.class_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-actions"><button type="submit" class="btn-primary btn-small">Save changes</button></div>
+  </form>
+</div>
+{% endblock %}

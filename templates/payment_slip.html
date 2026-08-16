@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wide-card" style="max-width: 420px;">
+  <h1>Payment slip</h1>
+  <p class="subtitle">Receipt #{{ payment.id }}</p>
+
+  <table class="data-table">
+    <tbody>
+      <tr><th>Student ID</th><td>{{ student.reg_number }}</td></tr>
+      <tr><th>Name</th><td>{{ student.name }}</td></tr>
+      <tr><th>Class</th><td>{{ student.school_class.class_name }}</td></tr>
+      <tr><th>Amount paid</th><td>{{ payment.amount }}</td></tr>
+      <tr><th>Balance after payment</th><td>{{ payment.balance_after }}</td></tr>
+      <tr><th>Date</th><td>{{ payment.payment_date }}</td></tr>
+      <tr><th>Recorded by</th><td>{{ payment.recorded_by }}</td></tr>
+    </tbody>
+  </table>
+
+  <button onclick="window.print()" class="btn-primary btn-small" style="margin-top:20px;">Print slip</button>
+  <a href="{{ url_for('payment_detail', student_id=student.id) }}"
+     style="display:block; margin-top:12px; color:var(--accent); text-align:center;">Back to student record</a>
+</div>
+{% endblock %}
